@@ -1,4 +1,4 @@
-import { Spin, Table } from 'antd'
+import { Spin, Table, Tag } from 'antd'
 import Layout from 'antd/lib/layout/layout'
 import React from 'react'
 import { useQuery } from 'react-query'
@@ -24,7 +24,7 @@ const Workers = () => {
             dataIndex: 'HashScore',
             key: 'Hash Scoring',
             defaultSortOrder: 'descend',
-            sorter: (a, b) => b.HashScore - a.HashScore,
+            sorter: (a, b) => a.HashScore - b.HashScore,
         },
         {
             title: '5min Hash',
@@ -44,7 +44,14 @@ const Workers = () => {
         {
             title: 'Status',
             dataIndex: 'State',
-            key: '24h Hash',
+            key: 'State',
+            render: State => (
+                <>
+                {
+                    State === 'OK' ?  <Tag color={'green'}>OK</Tag> : <Tag color={'volcano'}>DOWN</Tag>
+                }
+                </>
+            )
         },
     ]
 
