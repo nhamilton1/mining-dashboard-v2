@@ -1,9 +1,10 @@
 import React from 'react'
 import { useQuery } from 'react-query';
-import { Layout } from 'antd';
+import { Layout, Space } from 'antd';
 import moment from 'moment';
 import { fetchPoolStats } from '../api';
 import { Spin } from 'antd';
+import Text from 'antd/lib/typography/Text';
 
 const { Header } = Layout;
 
@@ -27,10 +28,14 @@ const Navbar = () => {
   let numOfTrue = results.filter(x => x === true).length
 
     return (
+      <Layout>
         <Header className="header">
-          <div className="logo" />
-            <div>Blocks mined today: {numOfTrue}</div>
+          <Space direction="horizontal">
+            <div className="logo" />
+              <Text style={{color: 'white'}}>Blocks mined today: {numOfTrue}</Text>
+          </Space>
         </Header>
+      </Layout>
     )
 }
 
