@@ -13,7 +13,7 @@ const Sidebar = () => {
   };
 
     return (
-        <Layout>
+        <Layout style={{ minHeight: '100vh' }}>
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
             <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
                 <SubMenu key="sub1"title="dropdown">
