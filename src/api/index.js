@@ -12,8 +12,12 @@ export const fetchDiffAdjust = async () => {
 
 export const fetchGeneral = async () => {
     const res = await axios.get('http://localhost:9000/stats')
-    // res.data.btc.blocks to get pool stats
     return res.data.btc
+}
+
+export const fetchPoolStats = async () => {
+    const res = await axios.get('http://localhost:9000/stats')
+    return res.data.btc.blocks
 }
 
 export const fetchProfile = async () => {
