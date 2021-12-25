@@ -1,4 +1,4 @@
-import { Skeleton, Spin, Statistic } from 'antd'
+import { Skeleton, Statistic } from 'antd'
 import React from 'react'
 import { useQuery } from 'react-query'
 import { fetchProfile, fetchPoolStats } from '../api'
@@ -6,8 +6,8 @@ import moment from 'moment'
 
 const GeneralInfo = () => {
 
-    const { data, isLoading } = useQuery('fetchProfile', fetchProfile)
-    const { data: poolStats, isLoading: poolStatsIsLoading } = useQuery('fetchPoolStats', fetchPoolStats)
+    const { data, isLoading } = useQuery('fetchProfile', fetchProfile, {refetchInterval: 60000, refetchIntervalInBackground: 60000})
+    const { data: poolStats, isLoading: poolStatsIsLoading } = useQuery('fetchPoolStats', fetchPoolStats, {refetchInterval: 60000, refetchIntervalInBackground: 60000})
 
     if(poolStatsIsLoading) {
       return <Skeleton/>

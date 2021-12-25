@@ -6,7 +6,7 @@ import { fetchWorkers } from '../api'
 import { Skeleton } from 'antd'
 
 const Workers = () => {
-    const {data, isLoading} = useQuery('fetchWorkers', fetchWorkers)
+    const {data, isLoading} = useQuery('fetchWorkers', fetchWorkers, {refetchInterval: 30000, refetchIntervalInBackground: 30000})
 
     if(isLoading){
         return <Skeleton paragraph={{ rows: 10 }}/>
@@ -23,8 +23,8 @@ const Workers = () => {
             title: 'Hash Scoring',
             dataIndex: 'HashScore',
             key: 'Hash Scoring',
-            defaultSortOrder: 'descend',
-            sorter: (a, b) => a.HashScore - b.HashScore,
+            defaultSortOrder: 'ascend',
+            sorter: (a, b) => (b.HashScore.replace('th/s', '')) - (a.HashScore.replace('th/s', '')),
         },
         {
             title: '5min Hash',
@@ -59,7 +59,7 @@ const Workers = () => {
     Object.entries(data.workers).map((worker, idx) => {
         return dataSource.push({
             key : idx,
-            name : worker[0],
+            name : worker[0].substring(worker[0].indexOf('.')+1),
             HashScore: `${(worker[1].hash_rate_scoring / 1000).toFixed(2)}th/s`,
             FiveHash: `${(worker[1].hash_rate_5m / 1000).toFixed(2)}th/s`,
             SixtyHash: `${(worker[1].hash_rate_60m / 1000).toFixed(2)}th/s`,
