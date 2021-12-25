@@ -8,7 +8,7 @@ const Sidebar = (props) => {
         <Layout.Sider style={{ minHeight: '100vh' }}width={'15vw'}>
           <Menu theme="dark" mode="inline" openKeys={"sub1"}>
             <Menu.Item key="1" onClick={handleClick}>
-              Option 1
+              Home
             </Menu.Item>
             <Menu.Item key="2" onClick={handleClick}>
               Option 2
