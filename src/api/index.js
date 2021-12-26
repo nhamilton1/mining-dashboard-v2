@@ -17,7 +17,7 @@ export const fetchGeneral = async () => {
 
 export const fetchPoolStats = async () => {
     const res = await axios.get('http://localhost:9000/stats')
-    return res.data.btc.blocks
+    return res.data.btc
 }
 
 export const fetchProfile = async () => {
@@ -32,5 +32,10 @@ export const fetchWorkers = async () => {
 
 export const fetchGlobalHashrate = async () => {
     const res = await axios.get('http://localhost:9000/global_hashrate')
-    return res
+    return res.data
+}
+
+export const fetchAvg30DayGlobalHash = async () => {
+    const res = await axios.get('http://localhost:9000/30day_global_avg')
+    return res.data
 }

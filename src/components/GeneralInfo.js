@@ -25,7 +25,7 @@ const GeneralInfo = () => {
       );
     }
   
-    const results = findsBlocksMined(Object.entries(poolStats).map(blocks => moment.unix(blocks[1].date_found).format('MMM Do , h:mm a')), moment().format('MMM Do'))
+    const results = findsBlocksMined(Object.entries(poolStats.blocks).map(blocks => moment.unix(blocks[1].date_found).format('MMM Do , h:mm a')), moment().format('MMM Do'))
     let numOfblocks = results.filter(x => x === true).length
   
     return (
