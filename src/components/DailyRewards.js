@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { useQuery } from 'react-query'
 import { fetchDailyRewards } from '../api'
-import { Skeleton } from 'antd'
+import { Skeleton, Typography } from 'antd'
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts'
 
 
@@ -27,7 +27,7 @@ const DailyRewards = () => {
 
     return (
         <div>
-            <h1 className='daily-rewards'>Daily Rewards</h1>
+            <Typography.Title style={{ fontSize: '1.5rem' }}>Daily Rewards</Typography.Title>
             <ResponsiveContainer width="100%" height={250}>
                 <LineChart data={formattedData} margin={{ top: 10, right: 15, left: 20, bottom: 5 }}>
                     <Line name="sats" type="monotone" dataKey="Sats" stroke="#8884d8" animationEasing='ease-in'/>

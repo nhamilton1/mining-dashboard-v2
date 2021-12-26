@@ -5,11 +5,11 @@ const { Header } = Layout;
 const Navbar = () => {
 
     return (
-      <Layout>
+      <Layout className="layout">
         <Header className="header">
-          <Space direction="horizontal">
             <div className="logo" />
-          </Space>
+            <Space direction="horizontal">
+            </Space>
         </Header>
       </Layout>
     )

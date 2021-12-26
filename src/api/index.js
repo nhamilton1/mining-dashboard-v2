@@ -30,3 +30,7 @@ export const fetchWorkers = async () => {
     return res.data.btc
 }
 
+export const fetchGlobalHashrate = async () => {
+    const res = await axios.get('http://localhost:9000/global_hashrate')
+    return res
+}

@@ -59,7 +59,7 @@ const Workers = () => {
     Object.entries(data.workers).map((worker, idx) => {
         return dataSource.push({
             key : idx,
-            name : worker[0].substring(worker[0].indexOf('.')+1),
+            name : worker[0].substring(worker[0].indexOf('.')+1), //removes chars up to the period
             HashScore: `${(worker[1].hash_rate_scoring / 1000).toFixed(2)}th/s`,
             FiveHash: `${(worker[1].hash_rate_5m / 1000).toFixed(2)}th/s`,
             SixtyHash: `${(worker[1].hash_rate_60m / 1000).toFixed(2)}th/s`,
