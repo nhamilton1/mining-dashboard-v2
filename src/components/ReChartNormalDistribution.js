@@ -98,32 +98,64 @@ const ReChartNormalDistribution = () => {
     let data = removeDupes.map(x => ({ x, y: zScore(x), z: GetZPercent(zScore(x))}));
     let newDataSet = removeDupes.map(x => ({ x, y: zScore(x), z: GetNewZPercent(zScore(x))}));
 
-    console.log(newDataSet)
+
+    // const renderToolTip = (props) =>{
+    //   if(props.active){
+    //     if(props.payload[0].payload['z'] < 50 ){
+    //       return(
+    //         <div className='recharts-default-tooltip' style={style}>
+    //           {`<${props.payload[0].payload['z'].toFixed(3)}% to get ${props.payload[0].payload['x']} blocks  `}
+    //         </div>
+    //       ) 
+    //     } else if(props.payload[0].payload['z'] === 50 ){
+    //       return(
+    //          <div className='recharts-default-tooltip' style={style}>
+    //           {`${props.payload[0].payload['z']}% to get ${props.payload[0].payload['x']} blocks  `}
+    //         </div>
+    //       ) 
+    //     } else {
+    //         return (
+    //           <div className='recharts-default-tooltip' style={style}>
+    //             {`${props.payload[0].payload['z'].toFixed(3)}% to get ${props.payload[0].payload['x']} blocks  `}
+    //           </div>
+    //         )
+    //     }
+    //   }
+    //   return null
+    // }
+
 
     const renderToolTip = (props) =>{
+      console.log(props)
       if(props.active){
-        if(props.payload[0].payload['z'] < 50 ){
-          return(
-            <div className='recharts-default-tooltip' style={style}>
-              {`${props.payload[0].payload['z'].toFixed(3)}% to get ${props.payload[0].payload['x']} blocks  `}
-            </div>
-          ) 
-        } else if(props.payload[0].payload['z'] > 50 ){
-          return(
-            <div className='recharts-default-tooltip' style={style}>
-              {`${props.payload[0].payload['z'].toFixed(3)}% to get ${props.payload[0].payload['x']} blocks  `}
-            </div>
-          ) 
-        } 
-      }
-      if(props.active){
-        if(props.payload[0].payload['z'] === 50) {
-          return (
-            <div className='recharts-default-tooltip' style={style}>
-              {`${props.payload[0].payload['z']}% to get ${props.payload[0].payload['x']} blocks  `}
-            </div>
-          )
-        }
+        return (
+          <div>
+            {
+              props.payload[0].payload['y'] < 0 
+              
+              ? 
+
+              <div className='recharts-default-tooltip' style={style}>
+                {`< ${props.payload[0].payload['z'].toFixed(3)}% to get ${props.payload[0].payload['x']} blocks  `}
+              </div>
+
+              : props.payload[0].payload['y'] > 0
+              
+              ?
+
+              <div className='recharts-default-tooltip' style={style}>
+                {`> ${props.payload[0].payload['z'].toFixed(3)}% to get ${props.payload[0].payload['x']} blocks  `}
+              </div>
+
+              :
+
+              <div className='recharts-default-tooltip' style={style}>
+                {`${props.payload[0].payload['z']}% to get ${props.payload[0].payload['x']} blocks  `}
+              </div>
+              
+            }
+          </div>
+        )
       }
       return null
     }
