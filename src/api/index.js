@@ -39,3 +39,8 @@ export const fetchAvg30DayGlobalHash = async () => {
     const res = await axios.get('http://localhost:9000/30day_global_avg')
     return res.data
 }
+
+export const fetchSlushPoolBlockCounterPerDay = async () => {
+    const res = await axios.get('http://localhost:9000/slushpool_block_counter')
+    return res.data.data
+}
