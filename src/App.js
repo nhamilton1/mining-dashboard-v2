@@ -6,14 +6,14 @@ import { Content } from "antd/lib/layout/layout";
 import Workers from "./components/Workers";
 import GeneralInfo from "./components/GeneralInfo";
 import DailyRewards from "./components/DailyRewards";
-import ReChartNormalDistribution from "./components/ReChartNormalDistribution";
+import NormalDistribution from "./components/NormalDistribution";
 
 const App = () => {
   const [render, updateRender] = useState(1);
 
   const components = {
     1: <><GeneralInfo/><DailyRewards/><Workers/></>,
-    2: <ReChartNormalDistribution/>,
+    2: <NormalDistribution/>,
     3: <div>Option 3</div>,
     4: <div>Option 4</div>
   };
