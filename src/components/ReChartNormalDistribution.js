@@ -5,6 +5,15 @@ import { Area, AreaChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Tool
 import {fetchSlushPoolBlockCounterPerDay } from '../api'
 import _ from 'lodash'
 
+const style = {
+  margin: '0px', 
+  padding: '10px', 
+  backgroundColor: 'rgb(255, 255, 255)', 
+  border: '1px solid rgb(204, 204, 204)', 
+  whiteSpace: 'nowrap', 
+  darkreader: 'inline', 
+}
+
 const ReChartNormalDistribution = () => {
 
     const { data: slushPoolBlockPerDay, isLoading: slushPoolBlockPerDayLoading } = useQuery('fetchSlushPoolBlockCounterPerDay', fetchSlushPoolBlockCounterPerDay, 
@@ -92,10 +101,31 @@ const ReChartNormalDistribution = () => {
     console.log(newDataSet)
 
     const renderToolTip = (props) =>{
-      console.log(props)
-      return (
-        <div>this is a test</div>
-      )
+      if(props.active){
+        if(props.payload[0].payload['z'] < 50 ){
+          return(
+            <div className='recharts-default-tooltip' style={style}>
+              {`${props.payload[0].payload['z'].toFixed(3)}% to get ${props.payload[0].payload['x']} blocks  `}
+            </div>
+          ) 
+        } else if(props.payload[0].payload['z'] > 50 ){
+          return(
+            <div className='recharts-default-tooltip' style={style}>
+              {`${props.payload[0].payload['z'].toFixed(3)}% to get ${props.payload[0].payload['x']} blocks  `}
+            </div>
+          ) 
+        } 
+      }
+      if(props.active){
+        if(props.payload[0].payload['z'] === 50) {
+          return (
+            <div className='recharts-default-tooltip' style={style}>
+              {`${props.payload[0].payload['z']}% to get ${props.payload[0].payload['x']} blocks  `}
+            </div>
+          )
+        }
+      }
+      return null
     }
 
     return (
@@ -103,18 +133,18 @@ const ReChartNormalDistribution = () => {
             <Typography.Title style={{ fontSize: '1.5rem' }}>Normal Distribution</Typography.Title>
             <ResponsiveContainer width="100%" height={250}>
               <AreaChart width={520} height={200} data={newDataSet} >
-                <Area dataKey="z" fill="#ffaa15" name='z' animationEasing='ease-in' type={'monotone'} />
-                <XAxis dataKey="x" allowDuplicatedCategory={false} orientation='top' scale={'band'} xAxisId={0} />
+                <Area dataKey="z" fill="#ffaa15" name='z' animationEasing='ease-in' type='monotone'/>
+                <XAxis dataKey="x" allowDuplicatedCategory={false} orientation='top' scale='band' xAxisId={0} />
                 <YAxis />
-                <Tooltip labelFormatter={(x) => `${x} blocks`} />
+                <Tooltip content={renderToolTip}/>
                 <CartesianGrid opacity={0.1} vertical={false} />
               </AreaChart>
             </ResponsiveContainer>
             <Typography.Title style={{ fontSize: '1.5rem' }}>Cumulative Normal Distribution</Typography.Title>
             <ResponsiveContainer width="100%" height={250}>
               <AreaChart width={520} height={200} data={data} >
-                <Area dataKey="z" fill="#ffaa15" name='z' animationEasing='ease-in' type={'monotone'}/>
-                <XAxis dataKey="x" allowDuplicatedCategory={false} orientation='bottom' scale={'band'} xAxisId={0}/>
+                <Area dataKey="z" fill="#ffaa15" name='z' animationEasing='ease-in' type='monotone'/>
+                <XAxis dataKey="x" allowDuplicatedCategory={false} orientation='bottom' scale='band' xAxisId={0}/>
                 <YAxis />
                 <Tooltip labelFormatter={(x) => `${x} blocks`} />
                 <CartesianGrid opacity={0.1} vertical={false} />
