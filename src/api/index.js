@@ -46,6 +46,7 @@ export const fetchSlushPoolBlockCounterPerDay = async () => {
 }
 
 export const fetchPoolBlockCounterPerDay = async ({ queryKey }) => {
+    // eslint-disable-next-line no-unused-vars
     const [ _, poolName ] = queryKey
     try { 
         const res = await axios.get("http://localhost:9000/pool_block_counter", { params: { pool: poolName } })
