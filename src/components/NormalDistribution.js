@@ -1,9 +1,12 @@
 import { Typography } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts'
-import {fetchSlushPoolBlockCounterPerDay } from '../api'
+import {fetchSlushPoolBlockCounterPerDay, fetchPoolBlockCounterPerDay } from '../api'
 import _ from 'lodash'
+import { Select } from 'antd';
+
+const { Option } = Select;
 
 const style = {
   margin: '0px', 
@@ -16,16 +19,27 @@ const style = {
 
 const NormalDistribution = () => {
 
+    const [poolName, setPoolName] = useState('SlushPool')
+
     const { data: slushPoolBlockPerDay, isLoading: slushPoolBlockPerDayLoading } = useQuery('fetchSlushPoolBlockCounterPerDay', fetchSlushPoolBlockCounterPerDay, 
         {
+            refetchOnWindowFocus: false,
             staleTime: Infinity
         })
 
+    const { data: poolBlockCounterPerDay,  isLoading } = useQuery(["fetchPoolBlockCounterPerDay", poolName], fetchPoolBlockCounterPerDay,
+        {
+            refetchOnWindowFocus: false,
+        })
+    
     if(slushPoolBlockPerDayLoading) {
       return <span></span>
     }
+    if(isLoading){
+      return <span/>
+    }
 
-    const dataPoints = Object.values(slushPoolBlockPerDay).sort((a,b)=> a-b)
+    const dataPoints = Object.values(poolBlockCounterPerDay).sort((a,b)=> a-b)
 
     const lowerBound = Math.min(...dataPoints), upperBound = Math.max(...dataPoints);
 
@@ -99,7 +113,6 @@ const NormalDistribution = () => {
     let newDataSet = removeDupes.map(x => ({ x, y: zScore(x), z: GetNewZPercent(zScore(x))}));
 
     const renderToolTip = (props) =>{
-      console.log(props)
       if(props.active){
         return (
           <div>
@@ -109,7 +122,7 @@ const NormalDistribution = () => {
               ? 
 
               <div className='recharts-default-tooltip' style={style}>
-                {`< ${props.payload[0].payload['z'].toFixed(3)}% to get ${props.payload[0].payload['x']} blocks  `}
+                {`${props.payload[0].payload['z'].toFixed(3)}% to get ${props.payload[0].payload['x']} or less blocks  `}
               </div>
 
               : props.payload[0].payload['y'] > 0
@@ -117,7 +130,7 @@ const NormalDistribution = () => {
               ?
 
               <div className='recharts-default-tooltip' style={style}>
-                {`> ${props.payload[0].payload['z'].toFixed(3)}% to get ${props.payload[0].payload['x']} blocks  `}
+                {`${props.payload[0].payload['z'].toFixed(3)}% to get ${props.payload[0].payload['x']} or more blocks  `}
               </div>
 
               :
@@ -132,6 +145,8 @@ const NormalDistribution = () => {
       }
       return null
     }
+
+    const pools = [ 'SlushPool', 'F2Pool', 'ViaBTC', 'Poolin', 'AntPool', 'Luxor', 'Foundry USA', 'Binance Pool', 'BTC.com', 'MARA Pool', 'SBI Crypto']
 
     return (
         <div>
@@ -155,8 +170,15 @@ const NormalDistribution = () => {
                 <CartesianGrid opacity={0.1} vertical={false} />
               </AreaChart>
             </ResponsiveContainer>
+            <Select defaultValue={poolName} style={{ width: 120, color: 'white' }} onChange={e => setPoolName(e)}>
+              {
+                pools.map((poolName, idx) => <Option key={idx} value={poolName.replace(' ', '+')}>{poolName}</Option>)
+              }
+            </Select>
         </div>
     )
 }
+
+
 
 export default NormalDistribution

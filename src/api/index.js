@@ -44,3 +44,13 @@ export const fetchSlushPoolBlockCounterPerDay = async () => {
     const res = await axios.get('http://localhost:9000/slushpool_block_counter')
     return res.data.data
 }
+
+export const fetchPoolBlockCounterPerDay = async ({ queryKey }) => {
+    const [ _, poolName ] = queryKey
+    try { 
+        const res = await axios.get("http://localhost:9000/pool_block_counter", { params: { pool: poolName } })
+        return res.data.data
+    } catch (error) { 
+        console.log(error) 
+    }
+}
