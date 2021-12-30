@@ -3,13 +3,10 @@ import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts'
 import { fetchPoolBlockCounterPerDay } from '../api'
-import { Select } from 'antd';
 import { GetNewZPercent, GetZPercent, getMean, getStdDeviation, generatePoints } from '../helpers/NDfunctions'
 import { renderToolTip } from '../utils/renderToolTip'
 import PoolSelector from './PoolSelector'
 import Layout from 'antd/lib/layout/layout'
-
-const { Option } = Select;
 
 const NormalDistribution = () => {
 
@@ -32,8 +29,6 @@ const NormalDistribution = () => {
   const lowerBound = Math.min(...dataPoints), upperBound = Math.max(...dataPoints);
 
   const zScore = x => Number(((x - mean) / stdDev).toFixed(2))
-
-  const pools = ['SlushPool', 'F2Pool', 'ViaBTC', 'Poolin', 'AntPool', 'Luxor', 'Foundry USA', 'Binance Pool', 'BTC.com', 'MARA Pool', 'SBI Crypto']
 
   let mean = getMean(lowerBound, upperBound);
   let stdDev = getStdDeviation(lowerBound, upperBound);
