@@ -1,5 +1,4 @@
 import { Select } from 'antd'
-import { Option } from 'antd/lib/mentions'
 import React from 'react'
 
 const PoolSelector = props => {
@@ -8,7 +7,7 @@ const PoolSelector = props => {
     return (
         <Select defaultValue={poolName} style={{ width: 120, color: 'white' }} onChange={e => setPoolName(e)}>
         {
-          pools.map((poolName, idx) => <Option key={idx} value={poolName.replace(' ', '+')}>{poolName}</Option>)
+          pools.map((poolName, idx) => <Select.Option key={idx} value={poolName.replace(' ', '+')}>{poolName}</Select.Option>)
         }
       </Select>
     )

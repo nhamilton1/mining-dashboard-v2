@@ -19,11 +19,10 @@ const NormalDistribution = () => {
       staleTime: Infinity
     })
 
-
   if (isLoading) {
     return <Skeleton paragraph={{ rows: 10 }} />
   }
-
+  console.log(poolBlockCounterPerDay)
   const dataPoints = Object.values(poolBlockCounterPerDay).sort((a, b) => a - b)
 
   const lowerBound = Math.min(...dataPoints), upperBound = Math.max(...dataPoints);
