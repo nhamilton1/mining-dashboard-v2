@@ -4,7 +4,7 @@ import { useQuery } from 'react-query'
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts'
 import { fetchPoolBlockCounterPerDay } from '../api'
 import { GetNewZPercent, GetZPercent, getMean, getStdDeviation, generatePoints } from '../helpers/NDfunctions'
-import { renderToolTip } from '../utils/renderToolTip'
+import { renderToolTip, renderToolTipCND } from '../utils/renderToolTip'
 import PoolSelector from './PoolSelector'
 import Layout from 'antd/lib/layout/layout'
 
@@ -22,7 +22,7 @@ const NormalDistribution = () => {
   if (isLoading) {
     return <Skeleton paragraph={{ rows: 10 }} />
   }
-  console.log(poolBlockCounterPerDay)
+  
   const dataPoints = Object.values(poolBlockCounterPerDay).sort((a, b) => a - b)
 
   const lowerBound = Math.min(...dataPoints), upperBound = Math.max(...dataPoints);
@@ -54,7 +54,7 @@ const NormalDistribution = () => {
           <Area dataKey="z" fill="#ffaa15" name='z' animationEasing='ease-in' type='monotone' />
           <XAxis dataKey="x" allowDuplicatedCategory={false} orientation='bottom' scale='band' xAxisId={0} />
           <YAxis />
-          <Tooltip labelFormatter={(x) => `${x} blocks`} />
+          <Tooltip labelFormatter={(x) => `${x} blocks`} content={renderToolTipCND}/>
           <CartesianGrid opacity={0.1} vertical={false} />
         </AreaChart>
       </ResponsiveContainer>
