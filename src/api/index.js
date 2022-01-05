@@ -55,3 +55,14 @@ export const fetchPoolBlockCounterPerDay = async ({ queryKey }) => {
         console.log(error) 
     }
 }
+
+export const fetchBitcoinPriceRange = async ({ queryKey }) => {
+    const [ _, date ] = queryKey
+    console.log(date)
+    try {
+        const res = await axios.get('http://localhost:9000/api/btc_prices', { params: { startDate: date[0], endDate: date[1] }})
+        return res.data
+    } catch (err) {
+        console.log(err)
+    }
+}
