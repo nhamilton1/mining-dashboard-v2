@@ -8,9 +8,9 @@ import { fetchBitcoinPriceRange } from '../api'
 const { RangePicker } = DatePicker;
 
 const Cagr = () => {
-    const [date, setDate] = useState([])
+    const [date, setDate] = useState([moment().subtract(1, 'year').format('YYYY-MM-DD') , moment(new Date()).format('YYYY-MM-DD')])
     
-    const { data: bitcoinPriceRange, isLoading: bitcoinPriceRangeIsLoading } =
+    const { data: bitcoinPriceRange, isLoading } =
     useQuery(["fetchBitcoinPriceRange", date], fetchBitcoinPriceRange,
     {
       keepPreviousData: true,
@@ -18,9 +18,19 @@ const Cagr = () => {
       staleTime: Infinity
     })
 
-    if (bitcoinPriceRangeIsLoading) {
+    if (isLoading) {
         return <Spin/>
     }
+    
+
+    let endVal = bitcoinPriceRange.slice(-1)[0].Price
+    let beginningVal = bitcoinPriceRange[0].Price
+    let numOfYears = bitcoinPriceRange.length/365
+    const cagrFormula = (endVal, beginningVal, numOfYears) => (((Math.pow((endVal / beginningVal), 1)) - numOfYears)*100).toFixed(4)
+    cagrFormula(endVal, beginningVal, numOfYears)
+    
+
+    
 
     const dateFormat = 'YYYY-MM-DD';
 
