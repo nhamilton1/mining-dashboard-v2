@@ -20,9 +20,7 @@ const CagrChart = props => {
 
 
     return (
-        <Layout style={{width: '50%'}}>
             <Line {...config} />    
-        </Layout>
     )
 }
 

@@ -1,4 +1,4 @@
-import { Space, DatePicker} from 'antd'
+import { Space, DatePicker, Col, Row} from 'antd'
 import moment from 'moment'
 import React from 'react'
 import { useState } from 'react'
@@ -7,6 +7,7 @@ import CagrChart from './CagrChart'
 import { fetchBitcoinPriceRange } from '../api'
 import Layout from 'antd/lib/layout/layout'
 import CagrSkeleton from './CagrSkeleton'
+import CagrValue from './CagrValue'
 
 const { RangePicker } = DatePicker;
 const oneYearAgoToday = moment().subtract(1, 'year').format('YYYY-MM-DD')
@@ -33,9 +34,9 @@ const Cagr = () => {
     let beginningVal = bitcoinPriceRange[0].Price
     let numOfYears = bitcoinPriceRange.length/365
     const cagrFormula = (endVal, beginningVal, numOfYears) => 
-        `${(((Math.pow((endVal / beginningVal), 1)) - numOfYears)*100).toFixed(4)}%`
-    console.log(cagrFormula(endVal, beginningVal, numOfYears))
-    console.log(bitcoinPriceRange)
+        `${(((Math.pow((endVal / beginningVal), 1)) - numOfYears)*100).toFixed(2)}%`
+    const cagrVal = cagrFormula(endVal, beginningVal, numOfYears)
+
 
     const dateFormat = 'YYYY-MM-DD';
 
@@ -61,8 +62,16 @@ const Cagr = () => {
 
     return (
         <Layout>
-            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexFlow: 'column wrap'}}>
-                <CagrChart bitcoinPriceRange={bitcoinPriceRange}/>
+            <Row>
+                <Col span={19}>
+                    <CagrChart bitcoinPriceRange={bitcoinPriceRange}/>
+                </Col>
+                <Col span={5} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexFlow:'column wrap'}}>
+                    <CagrValue cagrVal={cagrVal} />
+                    <CagrValue cagrVal={cagrVal} />
+                    <CagrValue cagrVal={cagrVal} />
+                </Col>
+            </Row>
                 <Space direction="vertical" size={12}>
                     <RangePicker 
                         format={dateFormat}
@@ -74,7 +83,6 @@ const Cagr = () => {
                         ]}
                         />
                 </Space>
-            </div>
         </Layout>
     )
 }
