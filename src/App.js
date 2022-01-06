@@ -13,9 +13,9 @@ const App = () => {
   const [render, updateRender] = useState(1);
 
   const components = {
-    1: <><Cagr/><GeneralInfo/><DailyRewards/><Workers/></>,
+    1: <><GeneralInfo/><DailyRewards/><Workers/></>,
     2: <NormalDistribution/>,
-    3: <div>Option 3</div>,
+    3: <Cagr/>,
     4: <div>Option 4</div>
   };
 

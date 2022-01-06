@@ -1,36 +1,41 @@
-import { Space, DatePicker, Spin} from 'antd'
+import { Space, DatePicker} from 'antd'
 import moment from 'moment'
 import React from 'react'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
+import CagrChart from './CagrChart'
 import { fetchBitcoinPriceRange } from '../api'
+import Layout from 'antd/lib/layout/layout'
+import CagrSkeleton from './CagrSkeleton'
 
 const { RangePicker } = DatePicker;
+const oneYearAgoToday = moment().subtract(1, 'year').format('YYYY-MM-DD')
+const todaysDate = moment(new Date()).format('YYYY-MM-DD')
+
+const initialDates = [oneYearAgoToday ,todaysDate]
 
 const Cagr = () => {
-    const [date, setDate] = useState([moment().subtract(1, 'year').format('YYYY-MM-DD') , moment(new Date()).format('YYYY-MM-DD')])
+    const [date, setDate] = useState(initialDates)
     
     const { data: bitcoinPriceRange, isLoading } =
     useQuery(["fetchBitcoinPriceRange", date], fetchBitcoinPriceRange,
     {
-      keepPreviousData: true,
-      refetchOnWindowFocus: false,
-      staleTime: Infinity
+        keepPreviousData: true,
+        refetchOnWindowFocus: false,
+        staleTime: Infinity
     })
 
     if (isLoading) {
-        return <Spin/>
+        return <CagrSkeleton />
     }
     
-
-    let endVal = bitcoinPriceRange.slice(-1)[0].Price
+    let endVal = bitcoinPriceRange[bitcoinPriceRange.length - 1].Price
     let beginningVal = bitcoinPriceRange[0].Price
     let numOfYears = bitcoinPriceRange.length/365
-    const cagrFormula = (endVal, beginningVal, numOfYears) => (((Math.pow((endVal / beginningVal), 1)) - numOfYears)*100).toFixed(4)
-    cagrFormula(endVal, beginningVal, numOfYears)
-    
-
-    
+    const cagrFormula = (endVal, beginningVal, numOfYears) => 
+        `${(((Math.pow((endVal / beginningVal), 1)) - numOfYears)*100).toFixed(4)}%`
+    console.log(cagrFormula(endVal, beginningVal, numOfYears))
+    console.log(bitcoinPriceRange)
 
     const dateFormat = 'YYYY-MM-DD';
 
@@ -49,19 +54,28 @@ const Cagr = () => {
     }
 
     const onChangeSetDate = (range) => {
-        const valueOfInput1 = range[0].format().slice(0, 10);
-        const valueOfInput2 = range[1].format().slice(0, 10);
-        setDate([valueOfInput1, valueOfInput2])
+        const startValue = range[0].format().slice(0, 10);
+        const endValue = range[1].format().slice(0, 10);
+        setDate([startValue, endValue])
     }
 
     return (
-        <Space direction="vertical" size={12}>
-            <RangePicker 
-                format={dateFormat}
-                disabledDate={disabledDate}
-                onChange={onChangeSetDate}
-            />
-        </Space>
+        <Layout>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexFlow: 'column wrap'}}>
+                <CagrChart bitcoinPriceRange={bitcoinPriceRange}/>
+                <Space direction="vertical" size={12}>
+                    <RangePicker 
+                        format={dateFormat}
+                        disabledDate={disabledDate}
+                        onChange={onChangeSetDate}
+                        defaultValue={[
+                            moment(oneYearAgoToday),
+                            moment(todaysDate)
+                        ]}
+                        />
+                </Space>
+            </div>
+        </Layout>
     )
 }
 
