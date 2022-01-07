@@ -7,7 +7,7 @@ import Workers from "./components/Workers";
 import GeneralInfo from "./components/GeneralInfo";
 import DailyRewards from "./components/DailyRewards";
 import NormalDistribution from "./components/NormalDistribution";
-import Cagr from "./components/Cagr";
+import Cagr from "./components/Cagr/Cagr";
 
 const App = () => {
   const [render, updateRender] = useState(1);

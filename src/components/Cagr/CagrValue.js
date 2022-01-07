@@ -6,7 +6,7 @@ const CagrValue = props => {
   const { historicPriceRange } = props;
 
   const cagrFormula = (endVal, beginningVal, numOfYears) =>
-    `${((Math.pow(endVal / beginningVal, 1/numOfYears) - 1) * 100).toFixed(2)}%`;
+    ((Math.pow(endVal / beginningVal, 1/numOfYears) - 1) * 100).toFixed(2);
 
   let numOfYears = historicPriceRange.length / 365;
   //bitcoin cagr values
@@ -28,34 +28,33 @@ const CagrValue = props => {
   let spyBeginningVal = historicPriceRange[0].spy_price;
   const spyCagrVal = cagrFormula(spyEndVal, spyBeginningVal, numOfYears);
 
-
   return (
     <>
       <Card size="small">
         <Statistic
           title={`BTC CAGR`}
-          value={btcCagrVal}
+          value={`${btcCagrVal}%`}
           precision={2}
-          valueStyle={{ color: '#3f8600' }}
-          prefix={<ArrowUpOutlined />}
+          valueStyle={btcCagrVal > 0 ? { color: '#3f8600' } : { color: 'red' }}
+          prefix={btcCagrVal > 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
         />
       </Card>
       <Card size="small">
         <Statistic
           title={`GLD CAGR`}
-          value={gldCagrVal}
+          value={`${gldCagrVal}%`}
           precision={2}
-          valueStyle={gldCagrVal < 0 ? { color: '#3f8600' } : { color: 'red' }}
-          prefix={gldCagrVal < 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+          valueStyle={gldCagrVal > 0 ? { color: '#3f8600' } : { color: 'red' }}
+          prefix={gldCagrVal > 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
         />
       </Card>
       <Card size="small">
         <Statistic
           title={`SPY CAGR`}
-          value={spyCagrVal}
+          value={`${spyCagrVal}%`}
           precision={2}
-          valueStyle={spyCagrVal < 0 ? { color: '#3f8600' } : { color: 'red' }}
-          prefix={spyCagrVal < 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+          valueStyle={spyCagrVal > 0 ? { color: '#3f8600' } : { color: 'red' }}
+          prefix={spyCagrVal > 0 ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
         />
       </Card>
     </>
