@@ -50,22 +50,22 @@ const CagrChart = props => {
         {
           label: 'BTC',
           data: btc_price_data,
-          borderColor: 'rgb(255,153,0)',
-          backgroundColor: 'rgba(255,153,0)',
+          borderColor: 'rgb(255,153,0, 0.1)',
+          backgroundColor: 'rgba(255,153,0, 0.7)',
           yAxisID: 'y',
         },
         {
           label: 'GLD',
           data: gld_price_data,
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgba(53, 162, 235)',
+          borderColor: 'rgb(53, 162, 235, 0.1)',
+          backgroundColor: 'rgba(53, 162, 235, 0.7)',
           yAxisID: 'y1',
         },
         {
           label: 'SPY',
           data: spy_price_data,
-          borderColor: 'rgb(255,160,122)',
-          backgroundColor: 'rgba(255,160,122)',
+          borderColor: 'rgb(0,128,0, 0.1)',
+          backgroundColor: 'rgb(0,128,0, 0.7)',
           yAxisID: 'y1',
         }
       ]
