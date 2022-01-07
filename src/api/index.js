@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios"
 
+const historicURL = process.env.REACT_APP_BASE_URL + '/api/historic_prices'
+
 export const fetchDailyRewards = async () => {
     const res = await axios.get('http://localhost:9000/rewards')
     return res.data.btc.daily_rewards
@@ -71,7 +73,7 @@ export const fetchHistoricPriceRange = async ({ queryKey }) => {
     const [ _, date ] = queryKey
     console.log(date)
     try {
-        const res = await axios.get('http://localhost:9000/api/historic_prices', { params: { startDate: date[0], endDate: date[1] }})
+        const res = await axios.get(historicURL, { params: { startDate: date[0], endDate: date[1] }})
         return res.data
     } catch (err) {
         console.log(err)
