@@ -1,13 +1,29 @@
 import React from 'react'
 // eslint-disable-next-line no-unused-vars
-import { Chart as ChartJS } from 'chart.js/auto'
-import { Line }            from 'react-chartjs-2'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js'
+import { Line } from 'react-chartjs-2'
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+)
 
 const CagrChart = props => {
     const { historicPriceRange } = props
-
-    console.log(historicPriceRange)
 
     const labels = historicPriceRange.map(x => x.date)
     const btc_price_data = historicPriceRange.map(x => x.btc_price)
