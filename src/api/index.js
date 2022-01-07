@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios"
 
 export const fetchDailyRewards = async () => {
@@ -46,7 +47,6 @@ export const fetchSlushPoolBlockCounterPerDay = async () => {
 }
 
 export const fetchPoolBlockCounterPerDay = async ({ queryKey }) => {
-    // eslint-disable-next-line no-unused-vars
     const [ _, poolName ] = queryKey
     try { 
         const res = await axios.get("http://localhost:9000/pool_block_counter", { params: { pool: poolName } })
@@ -61,6 +61,17 @@ export const fetchBitcoinPriceRange = async ({ queryKey }) => {
     console.log(date)
     try {
         const res = await axios.get('http://localhost:9000/api/btc_prices', { params: { startDate: date[0], endDate: date[1] }})
+        return res.data
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const fetchHistoricPriceRange = async ({ queryKey }) => {
+    const [ _, date ] = queryKey
+    console.log(date)
+    try {
+        const res = await axios.get('http://localhost:9000/api/historic_prices', { params: { startDate: date[0], endDate: date[1] }})
         return res.data
     } catch (err) {
         console.log(err)

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts'
 import { fetchPoolBlockCounterPerDay } from '../api'
-import { GetNewZPercent, GetZPercent, getMean, getStdDeviation, generatePoints } from '../helpers/NDfunctions'
+import { GetNewZPercent, getMean, getStdDeviation, generatePoints } from '../helpers/NDfunctions'
 import { renderToolTip } from '../utils/renderToolTip'
 import PoolSelector from './PoolSelector'
 import Layout from 'antd/lib/layout/layout'
@@ -35,7 +35,7 @@ const NormalDistribution = () => {
   let stdDev = getStdDeviation(lowerBound, upperBound);
   let points = generatePoints(lowerBound, upperBound);
   let removeDupes = [...new Set(points.map(x => Number(x.toFixed(0))))]
-  let data = removeDupes.map(x => ({ x, y: zScore(x), z: GetZPercent(zScore(x)) }));
+  // let data = removeDupes.map(x => ({ x, y: zScore(x), z: GetZPercent(zScore(x)) }));
   let newDataSet = removeDupes.map(x => ({ x, y: zScore(x), z: GetNewZPercent(zScore(x)) }));
 
   return (

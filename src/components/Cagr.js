@@ -4,7 +4,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import CagrChart from './CagrChart'
-import { fetchBitcoinPriceRange } from '../api'
+import { fetchHistoricPriceRange } from '../api'
 import Layout from 'antd/lib/layout/layout'
 import CagrSkeleton from './CagrSkeleton'
 import CagrValue from './CagrValue'
@@ -18,8 +18,8 @@ const initialDates = [oneYearAgoToday ,todaysDate]
 const Cagr = () => {
     const [date, setDate] = useState(initialDates)
     
-    const { data: bitcoinPriceRange, isLoading } =
-    useQuery(["fetchBitcoinPriceRange", date], fetchBitcoinPriceRange,
+    const { data: historicPriceRange, isLoading } =
+    useQuery(["fetchHistoricPriceRange", date], fetchHistoricPriceRange,
     {
         keepPreviousData: true,
         refetchOnWindowFocus: false,
@@ -29,14 +29,6 @@ const Cagr = () => {
     if (isLoading) {
         return <CagrSkeleton />
     }
-    
-    let endVal = bitcoinPriceRange[bitcoinPriceRange.length - 1].Price
-    let beginningVal = bitcoinPriceRange[0].Price
-    let numOfYears = bitcoinPriceRange.length/365
-    const cagrFormula = (endVal, beginningVal, numOfYears) => 
-        `${(((Math.pow((endVal / beginningVal), 1)) - numOfYears)*100).toFixed(2)}%`
-    const cagrVal = cagrFormula(endVal, beginningVal, numOfYears)
-
 
     const dateFormat = 'YYYY-MM-DD';
 
@@ -64,12 +56,10 @@ const Cagr = () => {
         <Layout>
             <Row>
                 <Col span={19}>
-                    <CagrChart bitcoinPriceRange={bitcoinPriceRange}/>
+                    <CagrChart historicPriceRange={historicPriceRange}/>
                 </Col>
                 <Col span={5} style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexFlow:'column wrap'}}>
-                    <CagrValue cagrVal={cagrVal} />
-                    <CagrValue cagrVal={cagrVal} />
-                    <CagrValue cagrVal={cagrVal} />
+                    <CagrValue historicPriceRange={historicPriceRange} />
                 </Col>
             </Row>
                 <Space direction="vertical" size={12}>
