@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,9 +8,9 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-import Layout from 'antd/lib/layout/layout';
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import Layout from "antd/lib/layout/layout";
 
 ChartJS.register(
   CategoryScale,
@@ -22,37 +22,38 @@ ChartJS.register(
   Legend
 );
 
-const CagrChart = props => {
+const CagrChart = (props) => {
   const { historicPriceRange } = props;
-  const labels = historicPriceRange.map(x => x.date);
-  const btc_price_data = historicPriceRange.map(x => x.btc_price);
-  const gld_price_data = historicPriceRange.map(x => x.gld_price);
-  const spy_price_data = historicPriceRange.map(x => x.spy_price);
+  const labels = historicPriceRange.map((x) => x.date);
+  const btc_price_data = historicPriceRange.map((x) => x.btc_price);
+  const gld_price_data = historicPriceRange.map((x) => x.gld_price);
+  const spy_price_data = historicPriceRange.map((x) => x.spy_price);
 
   const options = {
+    normalized: true,
     responsive: true,
     maintainAspectRatio: false,
     interaction: {
-      mode: 'index',
+      mode: "index",
       intersect: false,
     },
     stacked: false,
     plugins: {
       title: {
         display: true,
-        text: 'Cagr Chart',
+        text: "Cagr Chart",
       },
     },
     scales: {
       y: {
-        type: 'linear',
+        type: "linear",
         display: true,
-        position: 'left',
+        position: "left",
       },
       y1: {
-        type: 'linear',
+        type: "linear",
         display: true,
-        position: 'right',
+        position: "right",
         grid: {
           drawOnChartArea: false,
         },
@@ -64,25 +65,25 @@ const CagrChart = props => {
     labels,
     datasets: [
       {
-        label: 'BTC',
+        label: "BTC",
         data: btc_price_data,
-        borderColor: 'rgb(255,153,0, 0.1)',
-        backgroundColor: 'rgba(255,153,0, 0.7)',
-        yAxisID: 'y',
+        borderColor: "rgb(255,153,0, 0.1)",
+        backgroundColor: "rgba(255,153,0, 0.7)",
+        yAxisID: "y",
       },
       {
-        label: 'GLD',
+        label: "GLD",
         data: gld_price_data,
-        borderColor: 'rgb(53, 162, 235, 0.1)',
-        backgroundColor: 'rgba(53, 162, 235, 0.7)',
-        yAxisID: 'y1',
+        borderColor: "rgb(53, 162, 235, 0.1)",
+        backgroundColor: "rgba(53, 162, 235, 0.7)",
+        yAxisID: "y1",
       },
       {
-        label: 'SPY',
+        label: "SPY",
         data: spy_price_data,
-        borderColor: 'rgb(0,128,0, 0.1)',
-        backgroundColor: 'rgb(0,128,0, 0.7)',
-        yAxisID: 'y1',
+        borderColor: "rgb(0,128,0, 0.1)",
+        backgroundColor: "rgb(0,128,0, 0.7)",
+        yAxisID: "y1",
       },
     ],
   };
