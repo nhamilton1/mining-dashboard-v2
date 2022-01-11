@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios"
 
+const blockURL = process.env.REACT_APP_BASE_URL + '/pool_block_counter'
 const historicURL = process.env.REACT_APP_BASE_URL + '/api/historic_prices'
 
 export const fetchDailyRewards = async () => {
@@ -51,7 +52,7 @@ export const fetchSlushPoolBlockCounterPerDay = async () => {
 export const fetchPoolBlockCounterPerDay = async ({ queryKey }) => {
     const [ _, poolName ] = queryKey
     try { 
-        const res = await axios.get("http://localhost:9000/pool_block_counter", { params: { pool: poolName } })
+        const res = await axios.get(blockURL, { params: { pool: poolName } })
         return res.data.data
     } catch (error) { 
         console.log(error) 

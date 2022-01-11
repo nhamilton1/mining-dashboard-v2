@@ -29,6 +29,7 @@ const Cagr = () => {
     if (isLoading) {
         return <CagrSkeleton />
     }
+    console.log(historicPriceRange)
 
     const dateFormat = 'YYYY-MM-DD';
 

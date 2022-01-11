@@ -6,7 +6,7 @@ import moment from 'moment'
 
 const GeneralInfo = () => {
 
-    const { data, isLoading } = useQuery('fetchProfile', fetchProfile, {refetchInterval: 60000, refetchIntervalInBackground: 60000})
+    const { data, isLoading } = useQuery('fetchProfile', fetchProfile, {refetchInterval: 30000, refetchIntervalInBackground: 30000})
     const { data: poolStats, isLoading: poolStatsIsLoading } = useQuery('fetchPoolStats', fetchPoolStats, {refetchInterval: 60000, refetchIntervalInBackground: 60000})
 
     if(poolStatsIsLoading) {
