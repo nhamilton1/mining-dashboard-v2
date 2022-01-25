@@ -61,7 +61,6 @@ export const fetchPoolBlockCounterPerDay = async ({ queryKey }) => {
   }
 };
 
-
 export const fetchHistoricPriceRange = async ({ queryKey }) => {
   const [_, date] = queryKey;
   try {
